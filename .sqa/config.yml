@@ -1,11 +1,5 @@
 config:
-  credentials:
-  - id: upv_im_id
-    password_var: IM_PASS
-    username_var: IM_USER
-  - id: incd_openstack_id
-    password_var: OPENSTACK_PASS
-    username_var: OPENSTACK_USER
+  credentials: []
   project_repos:
     github.com/EOSC-synergy/saps-deploy:
       branch: master
@@ -17,10 +11,52 @@ environment:
   JPL_DOCKERFORCEBUILD: enabled
   JPL_KEEPGOING: enabled
 sqa_criteria:
-  SvcQC.Dep:
+  QC.Acc:
     repos:
-      github.com/EOSC-synergy/saps-deploy ec3_client:
+      github.com/EOSC-synergy/saps-deploy git:
         commands:
-        - /usr/bin/env sh .sqa/script.breezy-purple-fly.sh
-        container: svcqc.dep_gummy-crimson-rottweiler
-timeout: 1800
+        - /usr/bin/env sh .sqa/script.slimy-charcoal-caiman.sh
+        container: qc.acc_hazy-amethyst-bombay
+  QC.Doc:
+    repos:
+      github.com/EOSC-synergy/saps-deploy find_doc_files.py:
+        commands:
+        - /usr/bin/env sh .sqa/script.hazy-charcoal-peccary.sh
+        container: qc.doc_smelly-flax-rattlesnake
+      github.com/EOSC-synergy/saps-deploy git:
+        commands:
+        - /usr/bin/env sh .sqa/script.baggy-coral-macaw.sh
+        container: qc.doc_muggy-aqua-hummingbird
+      github.com/EOSC-synergy/saps-deploy markdownlint:
+        commands:
+        - /usr/bin/env sh .sqa/script.pretty-magnolia-labradoodle.sh
+        container: qc.doc_messy-auburn-gecko
+  QC.Lic:
+    repos:
+      github.com/EOSC-synergy/saps-deploy licensee:
+        commands:
+        - /usr/bin/env sh .sqa/script.sickly-celadon-frog.sh
+        container: qc.lic_scanty-ivory-dhole
+  QC.Sec:
+    repos:
+      github.com/EOSC-synergy/saps-deploy bandit:
+        commands:
+        - /usr/bin/env sh .sqa/script.goopy-salmon-ostrich.sh
+        container: qc.sec_whiny-periwinkle-shrew
+  QC.Sty:
+    repos:
+      github.com/EOSC-synergy/saps-deploy flake8:
+        commands:
+        - /usr/bin/env sh .sqa/script.goopy-green-antelope.sh
+        container: qc.sty_gloppy-lime-tamarin
+      github.com/EOSC-synergy/saps-deploy jsonlint:
+        commands:
+        - /usr/bin/env sh .sqa/script.lousy-lemon-bombay.sh
+        container: qc.sty_lovely-alizarin-robin
+  QC.Ver:
+    repos:
+      github.com/EOSC-synergy/saps-deploy get_git_tags.py:
+        commands:
+        - /usr/bin/env sh .sqa/script.shaggy-violet-mongrel.sh
+        container: qc.ver_shaggy-salmon-tiger
+timeout: 5400
